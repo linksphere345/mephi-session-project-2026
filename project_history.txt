@@ -1,0 +1,95 @@
+    1  nmcli 
+    2  nano /etc/sysconfig/network
+    3  cat /etc/sysconfig/network
+    4  clear
+    5  ip a
+    6  nmcli con mod "ens33" \ ipv4.addresses 192.168.1.100/24 \ ipv4.gateway 192.168.1.1 \ ipv4.dns "8.8.8.8" \ ipv4.method manual
+    7  nmcli con mod "ens33" \ipv4.addresses 192.168.1.100/24 \ipv4.gateway 192.168.1.1 \ipv4.dns "8.8.8.8" \ipv4.method manual
+    8  ip a
+    9  nmcli con up "ens33"
+   10  ip a
+   11  clear
+   12  hostnamectl set-hostname mephi-2026.domain.local
+   13  hostnamectl
+   14  ip a
+   15  iproute show
+   16  ip route show
+   17  ping 8.8.8.8
+   18  ping 192.168.1.1
+   19  ping -c 8.8.8.8 > /tmp/network_chech.txt
+   20  ping -c 4 8.8.8.8 > /tmp/network_check.txt
+   21  ping -c 4 192.168.1.1 > /tmp/network_check.txt
+   22  ping -c 4 8.8.8.8 >> /tmp/network_check.txt
+   23  cat /tmp/network_check.txt
+   24  dnf install nginx
+   25  dnf update
+   26  clear
+   27  dnf install -y nginx tcpdump libcap-ng-utils 
+   28  cd /tmp
+   29  mkdir tcpdump
+   30  cd tcpdump/
+   31  dnf download tcpdump
+   32  ls
+   33  rpm -i tcpdump-4.99.6-2.fc43.x86_64.rpm 
+   34  fdisk /dev/sdb
+   35  cd /dev
+   36  ls 
+   37  history
+   38  cd /dev
+   39  ls
+   40  lsblk
+   41  fdisk /dev/sda
+   42  mkfs.ext4 -L MEPHI-DATA /dev/sda
+   43  mkdir -p /data/mephi-web
+   44  dnf nano
+   45  dnf install nano
+   46  mkdir -p /data/mephi-web
+   47  nano /etc/fstab
+   48  mount a
+   49  mount -a
+   50  lsblk -f
+   51  systemctl daemon-reload
+   52  mount -a
+   53  nano /etc/fstab
+   54  mount -a
+   55  systemctl daemon-reload
+   56  lsblk -f
+   57  nano /etc/fstab
+   58  su mephi-admin
+   59  exit
+   60  systemctl enable --now nginx
+   61  journalctl -u nginx --since "5 minutes ago" > /tmp/nginx_recent_logs.txt
+   62  cat /tmp/nginx_recent_logs.txt 
+   63  useradd mephi-admin
+   64  groupadd mephi-devs
+   65  usermod mephi-admin -g mephi-devs
+   66  passwd mephi-admin
+   67  chown mephi-admin:mephi-devs /data/mephi-web
+   68  chmod 2775 /data/mephi-web
+   69  ls -ld /data/mephi-web/
+   70  getenforce 
+   71  semanage fcontext -a -t httpd_sys_content_t "/data/mephi-web(/.*)?"
+   72  restorecon -Rv /data/mephi-web
+   73  chmod u-s /usr/sbin/tcpdump
+   74  setcap 'cap_net_raw,cap_net_admin+ep' /usr/sbin/tcpdump
+   75  getcap /usr/sbin/tcpdump
+   76  sudo -u mephi-admin tcpdump --help
+   77  echo "root" | sudo tee /etc/ssh/denied_users
+   78  nano /etc/pam.d/login
+   79  nano /etc/pam.d/sshd
+   80  grep "UsePAM" /etc/ssh/sshd_config
+   81  systemctl restart sshd
+   82  grep "UsePAM" /etc/ssh/sshd_config
+   83  systemctl restart sshd
+   84  grep "UsePAM" /etc/ssh/sshd_config
+   85  nano /etc/ssh/sshd_config
+   86  grep "UsePAM" /etc/ssh/sshd_config
+   87  systemctl restart sshd
+   88  ssh 192.168.1.100
+   89  su mephi-admin
+   90  exit
+   91  nano /etc/nginx/nginx.conf
+   92  systemctl restart nginx
+   93  curl localhost
+   94  curl http://192.168.1.100
+   95  history > ~/project_history.txt
